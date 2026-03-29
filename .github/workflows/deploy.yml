@@ -2,7 +2,7 @@ name: Pull and Run Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   pull-and-run:
@@ -16,4 +16,11 @@ jobs:
         run: docker pull shubhamgunjal23/netflixclone:latest
 
       - name: Run container
-        run: docker run --rm shubhamgunjal23/netflixclone:latest
+        run: |
+          docker run -d -p 3000:3000 --name netflix-app shubhamgunjal23/netflixclone:latest
+
+      - name: Check running containers
+        run: docker ps
+
+      - name: Show logs
+        run: docker logs netflix-app
