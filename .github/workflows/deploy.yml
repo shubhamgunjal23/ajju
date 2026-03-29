@@ -1,23 +1,19 @@
-name: Deploy Website
+name: Pull and Run Docker Image
 
 on:
   push:
-    branches:
-      - main
-
-permissions:
-  contents: write   # 🔥 REQUIRED FIX
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  pull-and-run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4   # ✅ updated
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4   # ✅ updated
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+      - name: Pull Docker image
+        run: docker pull shubhamgunjal23/netflixclone:latest
+
+      - name: Run container
+        run: docker run --rm shubhamgunjal23/netflixclone:latest
